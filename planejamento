@@ -1,0 +1,27 @@
+PLANEJAMENTO DO BANCO DE DADOS
+Será utilizado um banco de dados relaciona, utilizando o PostgreSQL.
+
+-Tebelas
+    -events
+        -id INT PK AUTO_INCREMENTE      
+        -status BOOLEAN default=false   
+        -title varchar
+        -description varchar            
+        -grouped BOOLEAN default=false 
+    
+    -eventGroups
+        - id INT PK AUTO_INCREMENTE
+        - id_event INT(FK relacionado a events.id)
+        - name varchar
+    
+    -eventPeople
+        - id INT PK AUTO_INCREMENT
+        - id_event INT (FK Relacionado a events.id)
+        - id_group INT (FK Relacionado a eventsGroups.id)
+        - name varchar
+        - cpf varchar
+        - matched varchar default=""
+
+
+
+PLANEJAMENTO DE ROTAS
