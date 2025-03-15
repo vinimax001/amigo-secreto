@@ -4,11 +4,51 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// Define o gerador do cliente Prisma para JavaScript.
 generator client {
   provider = "prisma-client-js"
 }
 
+// Define a fonte de dados (banco de dados PostgreSQL).
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // A URL do banco de dados é obtida de uma variável de ambiente.
+}
+
+// Define o modelo "Event" (Evento).
+model Event {
+  id          Int @id @default(autoincrement()) // ID inteiro, chave primária, autoincremento.
+  status      Boolean @default(false) // Status booleano, padrão é falso.
+  title       String // Título do evento.
+  description String // Descrição do evento.
+  grouped     Boolean @default(false) // Indica se o evento é agrupado, padrão é falso.
+
+  // Relações com outros modelos.
+  EventGroup  EventGroup[] // Um evento pode ter múltiplos grupos de eventos. (Relação um-para-muitos)
+  EventPeople EventPeople[] // Um evento pode ter múltiplas pessoas associadas. (Relação um-para-muitos)
+}
+
+// Define o modelo "EventGroup" (Grupo de Eventos).
+model EventGroup {
+  id        Int @id @default(autoincrement()) // ID inteiro, chave primária, autoincremento.
+  id_event  Int // ID do evento ao qual o grupo pertence.
+  name      String // Nome do grupo de eventos.
+
+  // Relações com outros modelos.
+  event Event? @relation(fields: [id_event], references: [id]) // Relação muitos-para-um com o modelo "Event".
+  EventPeople EventPeople[] // Um grupo de eventos pode ter múltiplas pessoas associadas. (Relação um-para-muitos)
+}
+
+// Define o modelo "EventPeople" (Pessoas do Evento).
+model EventPeople{
+  id Int    @id @default(autoincrement()) // ID inteiro, chave primária, autoincremento.
+  id_event  Int // ID do evento ao qual a pessoa está associada.
+  id_group  Int // ID do grupo de eventos ao qual a pessoa está associada.
+  name      String // Nome da pessoa.
+  cpf       String // CPF da pessoa.
+  matchead  String @default("") // Campo para armazenar informações de correspondência, padrão é vazio.
+
+  // Relações com outros modelos.
+  event Event? @relation(fields: [id_event], references:[id]) // Relação muitos-para-um com o modelo "Event".
+  group EventGroup? @relation(fields: [id_group], references: [id]) // Relação muitos-para-um com o modelo "EventGroup".
 }

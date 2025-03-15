@@ -11,3 +11,6 @@
 # Instalando e adicionando Prisma no projeto
 ## npm i -D prisma
 ## npx prisma init
+
+# Migração do banco de dados com o prisma
+## npx prisma migrate dev
