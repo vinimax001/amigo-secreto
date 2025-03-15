@@ -25,3 +25,35 @@ Será utilizado um banco de dados relaciona, utilizando o PostgreSQL.
 
 
 PLANEJAMENTO DE ROTAS
+
+-Rodas do sistema
+    -Login
+        -POST /admin/login
+
+-Todas as rotas serão desenvolvidas em CRUD nas entidades events, eventsPeople, eventGroups.
+    (CRUD = Create, Read, Update, Delete)
+
+-events
+    - GET /admin/events --Lista todos eventos (Read)
+    - GET /admin/events/:id --Lista um evento (Read)
+    - POST /admin/events --Criando evento (Creat)
+    - PUT /admin/events/:id --Atualizando evento (Update)
+    - DELETE /admin/events/:id Deletendo evento (Delete)
+
+-eventsGroups
+    -GET /admin/events/:id_event/groups --Lista todos os grupos (Read)
+    -GET /admin/events/:id_event/groups/:id_group --Lista um grupo especifico (Read)
+    -POST /admin/events/:id_event/groups --Criar grupos diferentes em um evento (Create)
+    -PUT /admin/events/:id_event/groups/:id_groups --Alterar informações de um grupo (Update)
+    -DELETE /admin/events/:id_event/groups/:id_groups --Deletar grupo (Delete)
+
+-eventPeople
+    -GET /admin/events/:id_event/groups/:id_groups/people --Lista pessoas de um grupo (Read)
+    -GEt /admin/events/:id_event/groups/:id_groups/people/:id_people --Lista uma pessoas especifica (read)
+    -POST /admin/events/:id_event/groups/:id_group/people --Cadastra pessoa (Create)
+    -PUT /admin/events/:id_event/groups/:id_group/people/:id_people --Atualizar dados da pessoa s(Update)
+    -DELETE /admin/events/:id_event/groups/:id_event/groups/:id_group/people/:id_people --Deletar pessoa de um grupo
+
+-Rotas de consulta de forma publica
+    -GET /event/:id --Lista evento
+    -GET /events/:id_event/person/:cpf --Identificar pessoa do evento
