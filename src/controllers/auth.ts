@@ -32,3 +32,18 @@ export const login: RequestHandler = (req, res) => {
     }
     res.json({ token: auth.createToken() });
 }
+
+export const validate: RequestHandler = (req, res, next) => {
+    if(!req.headers.authorization) {
+        res.status(403).json({ error: 'Acesso Negado'});
+        return;
+    }
+
+    const token = req.headers.authorization.split(' ')[1];
+    if(!auth.validateToken(token)) {
+        res.status(403).json({ error: 'Acesso Negado'});
+        return;
+    }
+    
+    next();
+}

@@ -10,8 +10,8 @@ import * as auth from '../controllers/auth';
 const router = Router();
 
 // Define uma rota GET para '/ping'.
-router.get('/ping', (req, res) => {
-  res.json({ pong: true });
+router.get('/ping', auth.validate, (req, res) => {
+  res.json({ pong: true, admin: true });
 });
 
 // Define a rota de login
