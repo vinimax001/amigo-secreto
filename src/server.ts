@@ -13,6 +13,9 @@ import https from 'https';
 // Importa o módulo HTTP para criar servidores HTTP
 import http from 'http';
 
+// Importa o roteador 'routesAdmin'
+import adminRoutes from './routes/admin';
+
 // Importa o roteador 'siteRoutes'
 import siteRoutes from './routes/site';
 import { requestIntercepter } from './utils/requestIntercepter';
@@ -32,7 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 // Monta o middleware 'requestIntercepter' para todas as requisições HTTP em todos os caminhos.
 app.all('*', requestIntercepter);
 
-//app.use('/admin', adminRoutes);
+//rotas de admin
+app.use('/admin', adminRoutes);
+
 // Monta o roteador 'siteRoutes' na rota base '/'.
 app.use('/', siteRoutes);
 
