@@ -21,8 +21,11 @@ router.get('/ping', auth.validate, (req, res) => {
   res.json({ pong: true, admin: true });
 });
 
+// Rota para todos eventos
 router.get('/events', auth.validate, events.getAll);
 
+// Rota para um evento especifico
+router.get('/events/:id', auth.validate, events.getEvent);
 
 // Exporta o roteador configurado para ser usado em outros arquivos.
 export default router;
