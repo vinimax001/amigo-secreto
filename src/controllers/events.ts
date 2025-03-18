@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import * as events from '../services/events';
+import { z } from "zod";
 
 
 //Função assíncrona para obter todos os eventos.
@@ -27,3 +28,29 @@ export const getEvent: RequestHandler = async (req, res) => {
     res.json({ error: 'Ocorreu um erro'});
     return;
 }
+
+// Função para criar um evento usando prisma e zod
+export const addEvent: RequestHandler = async (req, res) => {
+    const addEventSchema = z.object({
+        title: z.string(),
+        description: z.string(),
+        grouped: z.boolean()
+    });
+
+    const body = addEventSchema.safeParse(req.body);
+    if (!body.success) {
+        res.json({ error: 'Dados inválidos' });
+        return;
+    }
+
+    try {
+        const newEvent = await events.add(body.data);
+        if (newEvent) {
+            res.status(201).json({ event: newEvent });
+        } else {
+            res.json({ error: 'Ocorreu um erro' });
+        }
+    } catch (error) {
+        res.json({ error: 'Ocorreu um erro' });
+    }
+};

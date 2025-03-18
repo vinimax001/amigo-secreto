@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, Prisma } from "@prisma/client"
 
 // Instancia o cliente Prisma para interagir com o banco de dados.
 const prisma = new PrismaClient();
@@ -15,4 +15,14 @@ export const getOne = async (id: number) => {
     try {
         return await prisma.event.findFirst({ where: { id } })
     } catch(err) {return false}
+}
+
+//Type para manipução banco de dados utilizando o prisma
+type EventsCreateData = Prisma.Args<typeof prisma.event, 'create'> ['data'];
+
+// Função para criação de eventos
+export const add = async (data:EventsCreateData) => {
+    try {
+        return await prisma.event.create ({ data });
+        } catch(err) { return false }
 }

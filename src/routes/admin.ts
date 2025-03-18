@@ -27,5 +27,8 @@ router.get('/events', auth.validate, events.getAll);
 // Rota para um evento especifico
 router.get('/events/:id', auth.validate, events.getEvent);
 
+//Rota para adcionar evento
+router.post('/events', auth.validate, events.addEvent);
+
 // Exporta o roteador configurado para ser usado em outros arquivos.
 export default router;
