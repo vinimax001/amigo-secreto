@@ -30,5 +30,8 @@ router.get('/events/:id', auth.validate, events.getEvent);
 //Rota para adcionar evento
 router.post('/events', auth.validate, events.addEvent);
 
+// Rota para editar e atualizar um evento
+router.put('/events/:id', auth.validate, events.updateEvent)
+
 // Exporta o roteador configurado para ser usado em outros arquivos.
 export default router;

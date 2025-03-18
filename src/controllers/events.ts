@@ -54,3 +54,31 @@ export const addEvent: RequestHandler = async (req, res) => {
         res.json({ error: 'Ocorreu um erro' });
     }
 };
+
+// Função para editar evento especifico
+export const updateEvent: RequestHandler = async (req, res) => {
+    const { id } = req.params;
+    const updateEventSchema = z.object({
+        status: z.boolean().optional(),
+        title: z.string().optional(),
+        description: z.string().optional(),
+        grouped: z.boolean().optional()
+    });
+
+    const body = updateEventSchema.safeParse(req.body);
+    if (!body.success) {
+        res.status(400).json({ error: 'Dados inválidos' });
+        return;
+    }
+
+    try {
+        const updatedEvent = await events.update(parseInt(id), body.data);
+        if (updatedEvent) {
+            res.status(200).json({ event: updatedEvent });
+        } else {
+            res.status(404).json({ error: 'Evento não encontrado' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Ocorreu um erro' });
+    }
+};
